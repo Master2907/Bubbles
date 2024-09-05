@@ -1,4 +1,10 @@
-var speed = 50;
+var speed = () => {
+    let s = 0;
+    while (s < 0.2) {
+        s = Math.random()
+    }
+    return s * 100;
+}
 
 // ##############
 function Bubble(id, pTop, pLeft, size) {
@@ -9,8 +15,8 @@ function Bubble(id, pTop, pLeft, size) {
 
     // assinging directions randomly
     var direction = {
-        x: Math.random() < 0.5 ? -speed : speed,
-        y: Math.random() < 0.5 ? -speed : speed,
+        x: Math.random() < 0.5 ? -speed() : speed(),
+        y: Math.random() < 0.5 ? -speed() : speed(),
     }
 
     // Changing direction when the edge is hit
@@ -18,14 +24,14 @@ function Bubble(id, pTop, pLeft, size) {
         // check Edge hit in "Y" direction
         if (direction.y > 0 && rect.top + 100 >= window.innerHeight ||
             direction.y < 0 && rect.top <= 0) {
-            direction.y *= -1;
+            direction.y = direction.y < 0 ? speed() : -speed();
             setRandomColor()
         }
 
         // check Edge hit in "X" direction
         if (direction.x > 0 && rect.left + 100 >= window.innerWidth ||
             direction.x < 0 && rect.left <= 0) {
-            direction.x *= -1;
+            direction.x = direction.x < 0 ? speed() : -speed();
             setRandomColor()
         }
     }
